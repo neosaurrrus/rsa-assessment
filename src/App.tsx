@@ -1,8 +1,13 @@
+import Extras from "./components/Extras/Extras";
+import Header from "./components/Header/Header";
+import Quote from "./components/Quote/Quote";
 
 function App() {
   return (
     <>
-      <h1 className='text-red-800'>Initial App</h1>
+      <Header />
+      <Quote />
+      <Extras />
     </>
   );
 }
