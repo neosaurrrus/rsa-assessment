@@ -30,16 +30,18 @@ export default function Extras({isAnnualQuote, setExtrasTotal}: Props){
     }
 
     return (
-        <section>
-            <h3>Tailor your cover with our optional extras</h3>
-            {extras.map((extra: ExtraType) => (
-                <Extra 
-                  key={extra.title} 
-                  extra={extra} 
-                  isAnnualQuote={isAnnualQuote}
-                  setExtrasTotal={setExtrasTotal}
-                />
-            ))}
+        <section className='p-8'>
+            <h3 className='text-3xl mb-8'>Tailor your cover with our optional extras</h3>
+            <div className='w-full flex flex-wrap gap-8'>
+                {extras.map((extra: ExtraType) => (
+                    <Extra 
+                    key={extra.title} 
+                    extra={extra} 
+                    isAnnualQuote={isAnnualQuote}
+                    setExtrasTotal={setExtrasTotal}
+                    />
+                ))}
+            </div>
         </section>
     )
 }

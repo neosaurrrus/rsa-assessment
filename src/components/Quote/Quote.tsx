@@ -24,11 +24,11 @@ export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Pr
     const [quote, setQuote] = useState<QuoteType | null>(null)
     const {firstName, address1, address2, address3, quoteRef, startDate, monthlyPrice, annualPrice} = quote || {}
     
-    const priceToUse = isAnnualQuote ? annualPrice : monthlyPrice
-    const extrasTotalToUse = isAnnualQuote ? extrasTotal.annualTotal : extrasTotal.monthlyTotal
 
-    const formattedStartDate =  startDate && new Date(startDate).toDateString()
-    
+    const formattedAddress = `${address1} ${address2 ? `, ${address2}` : ''} ${address3 ? `, ${address3}` : ''}`
+    const formattedStartDate =  startDate && new Date(startDate).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'})
+    const quotePriceToUse = (isAnnualQuote ? annualPrice : monthlyPrice) || 0
+    const extrasTotalToUse = isAnnualQuote ? extrasTotal.annualTotal : extrasTotal.monthlyTotal
 
     useEffect(() => {
         fetch('http://localhost:3000/quote')
@@ -41,26 +41,28 @@ export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Pr
         return null 
     }
 
-
     return (
-        <section className='flex bg-slate-200 w-full h-64'>
-            <div className="flex flex-col gap-4 h-48 p-4 justify-center">
-                <h2 className='text-2xl'>Hey {firstName},</h2>
-                <p>Here is your quote for Royal & Sun Alliance FORMAT FUNCTION{address1}, {address2}, {address3}</p>
+        <section className='flex  flex-flow w-full h-80 justify-between'>
+            <div className="flex flex-col gap-4 p-8 justify-center h-full">
+                <h2 className='text-3xl mb-4'>Hey {firstName},</h2>
+                <p>Here is your quote for {formattedAddress}</p>
                 <p>Quote reference: {quoteRef}</p>
                 <p>Cover starts on {formattedStartDate}.</p>
             </div>
 
-            <div className='w-full p-8'>
-                <div className='h-full w-full border border-black text-center'>
-                    <h2 className='text-4xl'>£{(priceToUse + extrasTotalToUse).toFixed(2) }</h2> 
-                    <p>per {isAnnualQuote ? 'year' : 'month'}</p>
-                    <p>This price includes Insurance Premium Tax at the current rate. No charge for paying monthly</p>
-                    <button
-                        onClick={() => setIsAnnualQuote((prev:boolean) => !prev)}
-                    >
-                        Switch to {isAnnualQuote ? 'monthly' : 'annual'}
-                    </button>
+            <div className='w-1/2 p-8'>
+                <div className='h-full w-full bg-white border border-black text-center flex flex-col justify-center gap-2 '>
+                    <h2 className='text-5xl'>£{(quotePriceToUse + extrasTotalToUse).toFixed(2) }</h2> 
+                    <p className='text-2xl'>per {isAnnualQuote ? 'year' : 'month'}</p>
+                    <p className="px-16 mt-1">This price includes Insurance Premium Tax at the current rate. No charge for paying monthly.</p>
+                    <div className="w-full flex justify-center">
+                        <button
+                            className='w-96 h-12 border mt-2 font-bold rounded-lg border-gray-800 bg-gray-200'
+                            onClick={() => setIsAnnualQuote((prev:boolean) => !prev)}
+                        >
+                            Switch to {isAnnualQuote ? 'monthly' : 'annual'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>

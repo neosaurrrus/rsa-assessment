@@ -41,15 +41,17 @@ export default function Extra({extra, isAnnualQuote, setExtrasTotal}: Props) {
     }
 
     return (
-        <div className='flex flex-col border p-4 gap-8'>
-            <div className='flex justify-between'>
-                <h4>{title}</h4>
-                <span>£{priceToUse} per {isAnnualQuote ? 'year' : 'month'}</span>
+        <div className='w-[500px] flex flex-col border border-gray-400 p-6 gap-6 bg-white justify-between'>
+            <div>
+                <div className='flex justify-between items-center mb-8'>
+                    <h4 className='text-2xl'>{title}</h4>
+                    <span>£{priceToUse} per {isAnnualQuote ? 'year' : 'month'}</span>
+                </div>
+                 <p>{text}</p>
             </div>
-            <p>{text}</p>
             <div className='flex justify-end'>
                 <button 
-                    className='w-40 border'
+                    className='w-48 h-12 border mt-2 font-bold rounded-lg border-gray-800 bg-gray-200'
                     aria-live='polite'
                     onClick={handleButtonClick}>
                     {isAdded ? 'Remove' : 'Select'} this Extra
