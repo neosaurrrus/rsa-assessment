@@ -4,7 +4,15 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      'sans': ['"Open Sans"', 'sans-serif'],
+    },
+    extend: {
+      colors: {
+        'rsaBrand': '#5C1380',
+        'rsaAccent': '#D4007F',
+      },
+    },
   },
   plugins: [],
 }
