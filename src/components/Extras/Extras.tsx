@@ -35,10 +35,10 @@ export default function Extras({isAnnualQuote, setExtrasTotal}: Props){
             <div className='w-full flex flex-wrap gap-8'>
                 {extras.map((extra: ExtraType) => (
                     <Extra 
-                    key={extra.title} 
-                    extra={extra} 
-                    isAnnualQuote={isAnnualQuote}
-                    setExtrasTotal={setExtrasTotal}
+                        key={extra.title} 
+                        extra={extra} 
+                        isAnnualQuote={isAnnualQuote}
+                        setExtrasTotal={setExtrasTotal}
                     />
                 ))}
             </div>
