@@ -24,7 +24,6 @@ export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Pr
     const [quote, setQuote] = useState<QuoteType | null>(null)
     const {firstName, address1, address2, address3, quoteRef, startDate, monthlyPrice = 0, annualPrice = 0} = quote || {}
     
-
     const formattedAddress = `${address1} ${address2 ? `, ${address2}` : ''} ${address3 ? `, ${address3}` : ''}`
     const formattedStartDate =  startDate && new Date(startDate).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'})
     const quotePriceToUse = (isAnnualQuote ? annualPrice : monthlyPrice)
@@ -50,14 +49,14 @@ export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Pr
                 <p>Cover starts on {formattedStartDate}.</p>
             </div>
 
-           <div className='p-8'>
-                <div className='h-full w-[550px] p-6 bg-white border border-black text-center flex flex-col justify-center gap-2 '>
-                    <h2 className='text-5xl'>£{(quotePriceToUse + extrasTotalToUse).toFixed(2) }</h2> 
-                    <p className='text-2xl'>per {isAnnualQuote ? 'year' : 'month'}</p>
+           <div className='p-8 max-w-full'>
+                <div className='h-full w-[550px] max-w-full p-6 bg-white dark:bg-gray-800 border border-gray-500 text-center flex flex-col justify-center gap-2 '>
+                    <h2 className='text-5xl text-rsaAccent'>£{(quotePriceToUse + extrasTotalToUse).toFixed(2) }</h2> 
+                    <p className='text-2xl text-rsaAccent'>per {isAnnualQuote ? 'year' : 'month'}</p>
                     <p className="px-16 mt-1">This price includes Insurance Premium Tax at the current rate. No charge for paying monthly.</p>
                     <div className="w-full flex justify-center">
                         <button
-                            className='w-96 h-12 border mt-2 font-bold rounded-lg border-gray-800 bg-gray-200'
+                            className='w-96 h-12 border mt-2 font-bold text-white rounded-lg border-gray-800 bg-rsaBrand hover:scale-105 duration-300'
                             onClick={() => setIsAnnualQuote((prev:boolean) => !prev)}
                         >
                             Switch to {isAnnualQuote ? 'monthly' : 'annual'}
