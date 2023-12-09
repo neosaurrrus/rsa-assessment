@@ -35,7 +35,7 @@ export default function Extra({extra, isAnnualQuote, setExtrasTotal}: Props) {
     }
 
     return (
-        <div className={`${isAdded ? 'border-rsaAccent shadow-lg scale-[101%] border-2' : 'border-gray-600'} duration-300 bg-white dark:bg-gray-800 w-[500px] flex flex-col border p-6 gap-6 justify-between`}>
+        <li className={`${isAdded ? 'border-rsaAccent shadow-lg scale-[101%] border-2' : 'border-gray-600'} duration-300 bg-white dark:bg-gray-800 w-[500px] flex flex-col gap-6 justify-between border box-content p-6`}>
             <div>
                 <div className={`flex justify-between items-center mb-8`}>
                     <h4 className='text-2xl'>{title}</h4>
@@ -51,6 +51,6 @@ export default function Extra({extra, isAnnualQuote, setExtrasTotal}: Props) {
                     {isAdded ? 'Remove' : 'Select'} this extra
                 </button>
             </div> 
-        </div>
+        </li>
     )
 } 

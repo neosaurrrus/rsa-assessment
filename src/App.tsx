@@ -9,7 +9,7 @@ function App() {
   const [extrasTotal, setExtrasTotal] = useState({annualTotal: 0, monthlyTotal: 0})
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
+    <div className='h-screen bg-gray-100 dark:bg-gray-900 dark:text-gray-100'>
       <Header />
       <Quote 
         isAnnualQuote={isAnnualQuote}
