@@ -1,18 +1,5 @@
-import { useEffect, useState} from "react"
-
-type QuoteType = {
-    address1: string,
-    address2: string,
-    address3: '',
-    annualPrice: number,
-    firstName: string
-    lastName: string,
-    monthlyPrice: number,
-    postcode: string
-    quoteRef: string
-    startDate: Date,
-    town: string
-}
+import { useFetch } from "hooks/useFetch"
+import {Quote as QuoteType, ApiEndpoints} from 'types/index' 
 
 type Props = {
     isAnnualQuote: boolean,
@@ -21,23 +8,30 @@ type Props = {
 }
 
 export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Props){
-    const [quote, setQuote] = useState<QuoteType | null>(null)
-    const {firstName, address1, address2, address3, quoteRef, startDate, monthlyPrice = 0, annualPrice = 0} = quote || {}
-    
-    const formattedAddress = `${address1} ${address2 ? `, ${address2}` : ''} ${address3 ? `, ${address3}` : ''}`
-    const formattedStartDate =  startDate && new Date(startDate).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'})
-    const quotePriceToUse = (isAnnualQuote ? annualPrice : monthlyPrice)
-    const extrasTotalToUse = isAnnualQuote ? extrasTotal.annualTotal : extrasTotal.monthlyTotal
+    const { fetchedData: quote = [], isLoading, error} = useFetch<QuoteType[]>(ApiEndpoints.QUOTE)
 
-    useEffect(() => {
-        fetch('http://localhost:3000/quote')
-            .then(res => res.json())
-            .then(res => setQuote(res[0]))
-            .catch(err => console.log(err))
-    }, [])
+    const {firstName, address1, address2, address3, quoteRef, startDate, monthlyPrice = 0, annualPrice = 0} = quote[0] || {}
     
-    if (!quote) {
-        return null 
+    // Formatting Text to be displayed
+    const formattedAddress:string = `${address1} ${address2 ? `, ${address2}` : ''} ${address3 ? `, ${address3}` : ''}`
+    const formattedStartDate =  startDate && new Date(startDate).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'})
+    const quotePriceToUse = (isAnnualQuote ? annualPrice + extrasTotal.annualTotal : monthlyPrice + extrasTotal.monthlyTotal).toFixed(2)
+
+    
+    // Handle Loading or Error states
+    if (isLoading) {
+        return <div className="h-96 w-screen bg-red flex items-center justify-center">
+            <h1 className='text-2xl animate-pulse'>Loading your quote...</h1>
+        </div>
+    }
+
+    if (error) {
+        return (
+            <div className="h-96 w-screen bg-red flex items-center justify-center">
+                <h1 className='text-2xl animate-pulse'>Sorry there was an error loading your quote:</h1>
+                <p>{error.toString()}</p>
+            </div>
+        )
     }
 
     return (
@@ -50,8 +44,8 @@ export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Pr
             </div>
 
            <div className='p-8 max-w-full'>
-                <div className='h-full w-[550px] max-w-full p-6 bg-white dark:bg-gray-800 border border-gray-500 text-center flex flex-col justify-center gap-2 '>
-                    <h2 className='text-5xl text-rsaAccent'>£{(quotePriceToUse + extrasTotalToUse).toFixed(2) }</h2> 
+                <div className='h-full w-[500px] max-w-full p-6 bg-white dark:bg-gray-800 border border-gray-500 text-center flex flex-col justify-center gap-2 '>
+                    <h2 className='text-5xl text-rsaAccent'>£{quotePriceToUse}</h2> 
                     <p className='text-2xl text-rsaAccent'>per {isAnnualQuote ? 'year' : 'month'}</p>
                     <p className="px-16 mt-1">This price includes Insurance Premium Tax at the current rate. No charge for paying monthly.</p>
                     <div className="w-full flex justify-center">

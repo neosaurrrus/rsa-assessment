@@ -1,32 +1,29 @@
-import {useEffect, useState} from 'react'
+import {Extra as ExtraType, ApiEndpoints} from 'types'
 import Extra from './components/Extra/Extra'
-
-type ExtraType = {
-    annualPrice: number,
-    monthlyPrice: number,
-    text: string,
-    title: string
-}
+import { useFetch } from 'hooks/useFetch'
 
 type Props = {
     isAnnualQuote: boolean,
     setExtrasTotal: (_previousState: (prev: {annualTotal: number, monthlyTotal: number}) => {annualTotal: number, monthlyTotal: number}) => void
 }
 
-
 export default function Extras({isAnnualQuote, setExtrasTotal}: Props){
+    const { fetchedData: extras = [], isLoading, error} = useFetch<ExtraType[]>(ApiEndpoints.EXTRAS)
 
-    const [extras, setExtras] = useState<ExtraType[] | null>(null)
+     // Handle Loading or Error states
+     if (isLoading) {
+        return <div className="h-96 w-screen bg-red flex items-center justify-center">
+            <h1 className='text-2xl animate-pulse'>Loading Extras...</h1>
+        </div>
+    }
 
-    useEffect(() => {
-    fetch('http://localhost:3000/addons')
-        .then(res => res.json())
-        .then(res => setExtras(res))
-        .catch(err => console.log(err))
-    },[])
-
-    if(!extras) {
-        return null
+    if (error) {
+        return (
+            <div className="h-96 w-screen bg-red flex items-center justify-center">
+                <h1 className='text-2xl animate-pulse'>Sorry there was an error loading extras</h1>
+                <p>{error.toString()}</p>
+            </div>
+        )
     }
 
     return (

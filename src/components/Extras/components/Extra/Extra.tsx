@@ -1,11 +1,5 @@
 import { useState } from "react"
-
-type ExtraType = {
-    annualPrice: number,
-    monthlyPrice: number,
-    text: string,
-    title: string
-}
+import {Extra as ExtraType} from 'types'
 
 type Props = {
     extra: ExtraType,
@@ -41,11 +35,11 @@ export default function Extra({extra, isAnnualQuote, setExtrasTotal}: Props) {
     }
 
     return (
-        <div className={`${isAdded ? 'border-rsaAccent shadow-lg text-rsaAccent' : 'border-gray-600'} duration-300 bg-white dark:bg-gray-800 w-[500px] flex flex-col border p-6 gap-6 justify-between`}>
+        <div className={`${isAdded ? 'border-rsaAccent shadow-lg scale-[101%] border-2' : 'border-gray-600'} duration-300 bg-white dark:bg-gray-800 w-[500px] flex flex-col border p-6 gap-6 justify-between`}>
             <div>
-                <div className='flex justify-between items-center mb-8'>
+                <div className={`flex justify-between items-center mb-8`}>
                     <h4 className='text-2xl'>{title}</h4>
-                    <span>£{priceToUse} per {isAnnualQuote ? 'year' : 'month'}</span>
+                    <span> £{priceToUse} per {isAnnualQuote ? 'year' : 'month'}</span>
                 </div>
                  <p>{text}</p>
             </div>
