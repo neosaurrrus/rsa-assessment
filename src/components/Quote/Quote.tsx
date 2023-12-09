@@ -56,7 +56,6 @@ export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Pr
                     </button>
                 </div>
             </div>
-
         </section>
     )
 }
