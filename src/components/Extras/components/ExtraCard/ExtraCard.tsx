@@ -7,7 +7,7 @@ type Props = {
     setExtrasTotal: (_previousState: (prev: {annualTotal: number, monthlyTotal: number}) => {annualTotal: number, monthlyTotal: number}) => void
 }
 
-export default function Extra({extra, isAnnualQuote, setExtrasTotal}: Props) {
+export default function ExtraCard({extra, isAnnualQuote, setExtrasTotal}: Props) {
     const {annualPrice, monthlyPrice, text, title} = extra
     
     const [isAdded, setIsAdded] = useState(false)

@@ -1,6 +1,6 @@
 import {Extra as ExtraType, ApiEndpoints} from 'types'
-import Extra from './components/Extra/Extra'
 import { useFetch } from 'hooks/useFetch'
+import ExtraCard from './components/ExtraCard/ExtraCard'
 
 type Props = {
     isAnnualQuote: boolean,
@@ -31,7 +31,7 @@ export default function Extras({isAnnualQuote, setExtrasTotal}: Props){
             <h3 className='text-3xl mb-8'>Tailor your cover with our optional extras</h3>
             <ul className='w-full flex flex-wrap gap-8'>
                 {extras.map((extra: ExtraType) => (
-                    <Extra 
+                    <ExtraCard
                         key={extra.title} 
                         extra={extra} 
                         isAnnualQuote={isAnnualQuote}
