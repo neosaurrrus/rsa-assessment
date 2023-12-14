@@ -13,26 +13,14 @@ export default function Quote({isAnnualQuote, setIsAnnualQuote, extrasTotal}: Pr
 
     const {firstName, address1, address2, address3, quoteRef, startDate, monthlyPrice = 0, annualPrice = 0} = quote[0] || {}
     
-    // Formatting Text to be displayed
     const formattedAddress:string = `${address1} ${address2 ? `, ${address2}` : ''} ${address3 ? `, ${address3}` : ''}`
     const formattedStartDate =  startDate && new Date(startDate).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'})
     const quotePrice = (isAnnualQuote ? annualPrice + extrasTotal.annualTotal : monthlyPrice + extrasTotal.monthlyTotal).toFixed(2)
 
-    
-    // Handle Loading & Error states
-    if (isLoading) {
+    if (isLoading || error) {
         return <div className='h-96 w-screen bg-red flex items-center justify-center'>
-            <h1 className='text-2xl animate-pulse'>Loading your quote...</h1>
+            <h1 className='text-2xl animate-pulse'>{error ? 'Sorry! There was an error getting your quote' : 'Loading Your Quote...'}</h1>
         </div>
-    }
-
-    if (error) {
-        return (
-            <div className='h-96 w-screen bg-red flex items-center justify-center'>
-                <h1 className='text-2xl animate-pulse'>Sorry there was an error loading your quote:</h1>
-                <p>{error.toString()}</p>
-            </div>
-        )
     }
 
     return (

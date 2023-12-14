@@ -10,20 +10,10 @@ type Props = {
 export default function Extras({isAnnualQuote, setExtrasTotal}: Props){
     const { fetchedData: extras = [], isLoading, error} = useFetch<ExtraType[]>(ApiEndpoints.EXTRAS)
 
-     // Handle Loading & Error states
-     if (isLoading) {
+     if (isLoading || error) {
         return <div className='h-96 w-screen bg-red flex items-center justify-center'>
-            <h1 className='text-2xl animate-pulse'>Loading Extras...</h1>
+            <h1 className='text-2xl animate-pulse'>{error ? 'Sorry! There was an error loading extras' : 'Loading Extras...'}</h1>
         </div>
-    }
-
-    if (error) {
-        return (
-            <div className='h-96 w-screen bg-red flex items-center justify-center'>
-                <h1 className='text-2xl animate-pulse'>Sorry there was an error loading extras</h1>
-                <p>{error.toString()}</p>
-            </div>
-        )
     }
 
     return (
